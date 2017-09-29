@@ -14,7 +14,7 @@ Below is the record of my idea.<br>
 * Here, to get the circle of metal phere, I use `cv::findContours` to get the contour of the sphere. In order to avoid the potential noise, I adopt the contours with most points. Then, I initialize the position of circle center with the average position of circle points, and radius with the average distance of some points to the initial center. And I use some points to iterate to get the precise circle center and radius.<br>
 * Then I use the brightest point on the lambertian phere to get the light intensity.<br>
 * With the light direction and intensity, I get the normal and albedo.<br>
-* Because the high error of the dark point on the object. Dr.Qin recommends us to omit 10% darkest points in every image. So I use the quickSort algorithm to every image to get the 10% threshold. And these dark points won't attend later calculation.<br>
+* Because the high error of the dark point on the object. Dr.Qin recommends us to omit 10% darkest points in every image. So I use the quickSelect algorithm to every image to get the 10% threshold. And these dark points won't attend later calculation.<br>
 * And since the calculation needs at least 3 images to get the normal direction and albedo. I count the invalid image for every pixel. And only if valid image of one pixel is more than 3, this pixel will be calculated. Otherwise its value will be zero.<br>
 * Then I use the matrix operation to get normal and albedo. We should notice here that we should normalize every pixel value with the source intensity of image. Moreover, since most pixels on the object is valid for all images, the pseudo-inverse of the whole L is usually used. So, I calculate it before the iteration.<br>
 
@@ -36,10 +36,14 @@ When I map the normal to picture, I use the method mentioned in the `./Assignmen
 
 ### Depth effect
 It's kind of hard to map the depth to 2d-image because the depth of the object varies a lot. I try to use linear function and sigmoid function to map.<br>
+
+
 #### linear transform without judgement of nz
 | apple | elephant | pear |
 | ---------------|-------- | ---------- |
 | ![Image failed](./resultImage/appleHeight.jpg "apple height map") | ![Image failed](./resultImage/elephantHeightMethod1.jpg "elephant depth map") | ![Image failed](./resultImage/pearHeight.jpg "pear depth map")|
+
+
 
 #### sigmoid transform with and without judgement of nz
 |elephant with judgement of nz | elephant without judgement|
