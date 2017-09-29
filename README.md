@@ -55,7 +55,9 @@ From the picture, we can see that the judgement decreases the outlier to some ex
 ### How to use
 * In order to use it, you should have correctrly installed the `openCV` and `Eigen` library.<br>
 * The main class is in `PhotometricStero.h` and `PhotometricStero.cc`.<br>
+* `PFMAccess` class is used to access `.pbm` file, but you should never copy that. Use its pointer is a good idea.<br>
 * The `testPhotometricStero.cpp` contains the `main` function and some examples. You should be careful to change the path.<br>
+* project guide and materials is in the `./Assignment_1/`
 
 
 If you have any question, contact me at `xinyuan.gui95@gmail.com`
