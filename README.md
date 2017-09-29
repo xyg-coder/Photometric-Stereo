@@ -30,21 +30,21 @@ When I map the normal to picture, I use the method mentioned in the `./Assignmen
 ## Calculate the depth of every pixel
 * For these invalid point which doesn't have normal, I take one `3*3` window and assign the average normal direction to the invalid point.<br>
 * With every normal direction (nx, ny, nz) of every pixel, we have `(nx, ny, nz).dot((z(x+1, y)) - (z(x, y))) = 0, (nx, ny, nz).dot(z(x, y+1) - z(x, y)) = 0`. Thus we have `number_of_points * 2` equations.<br>
-* When I try to solve the equation `Pz = b`, the rank of P is `number_of_ponts - 1`. Thus, I set the depth of the point with median index to be zero and move it to constant matrix `b`.<br>
-* The parameter matrix `P` is of size `number_of_point * 2, number_of_point - 1`. So we have to create sparse matrix to solve the linear equation. I use `Eigen` library to solve it.<br>
+* When I try to solve the equation `Pz = b`, the rank of P is `number_of_points - 1`. Thus, I set the depth of the point with median index to be zero and move it to constant matrix `b`.<br>
+* The parameter matrix `P` is of size `number_of_points * 2, number_of_points - 1`. So we have to create sparse matrix to solve the linear equation. I use `Eigen` library to solve it.<br>
 * In the equation, if `nz` of one point is near to 0, the equation will be unstable. Thus, I make one judgement: `when nz is smaller than one constant, than add one small number to it`. I don't know if it is mathematically right. If you have better idea, please contact me at `xinyuan.gui95@gmail.com`.<br>
 
 ### Depth effect
 It's kind of hard to map the depth to 2d-image because the depth of the object varies a lot. I try to use linear function and sigmoid function to map.<br>
 #### linear transform without judgement of nz
 | apple | elephant | pear |
-| ---------------|-------- | ---------- | ------------|
-| ![Image failed](./resultImage/appleHeight.jpg.jpg "apple height map") | ![Image failed](./resultImage/elephantHeightMethod1.jpg "elephant depth map") | ![Image failed](./resultImage/pearHeight.jpg "pear depth map")|
+| ---------------|-------- | ---------- |
+| ![Image failed](./resultImage/appleHeight.jpg "apple height map") | ![Image failed](./resultImage/elephantHeightMethod1.jpg "elephant depth map") | ![Image failed](./resultImage/pearHeight.jpg "pear depth map")|
 
 #### sigmoid transform with and without judgement of nz
 |elephant with judgement of nz | elephant without judgement|
 |------------------------------|---------------------------|
-| ![Image failed](./resultImage/elephantHeightMethod2NoJudgement.jpg.jpg "elephant depth map without judgement") | ![Image failed](./resultImage/elephantHeightMethod2Judgement.jpg "elephant depth map with judgement")|
+| ![Image failed](./resultImage/elephantHeightMethod2NoJudgement.jpg "elephant depth map without judgement") | ![Image failed](./resultImage/elephantHeightMethod2Judgement.jpg "elephant depth map with judgement")|
 
 From the picture, we can see that the judgement decreases the outlier to some extent.<br>
 
